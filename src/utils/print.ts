@@ -25,8 +25,6 @@ class Print {
         if (DotenvConfig.NODE_ENV === Environment.DEVELOPMENT) log(chalk.blue(message))
         else Logger.debug(message)
     }
-
-
 }
 
 export default Print
