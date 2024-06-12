@@ -1,5 +1,6 @@
 import express from 'express'
 import sanitizeHtml from 'sanitize-html'
+import middleware from '../middleware'
 
 const app = express()
 
@@ -8,5 +9,6 @@ app.use((req, res, next) => {
     next()
 })
 
+middleware(app)
 
 export default app
