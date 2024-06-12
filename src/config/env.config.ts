@@ -1,7 +1,7 @@
 import dotenv from 'dotenv'
 import path from 'path'
 
-dotenv.config({path: path.resolve(process.cwd(), '.env')})
+dotenv.config({ path: path.resolve(process.cwd(), '.env') })
 
 export class DotenvConfig {
     static NODE_ENV = process.env.NODE_ENV
@@ -13,4 +13,7 @@ export class DotenvConfig {
     static DATABASE_USERNAME = process.env.DATABASE_USERNAME
     static DATABASE_PASSWORD = process.env.DATABASE_PASSWORD
     static DATABASE_NAME = process.env.DATABASE_NAME
+
+    // CORS LIST
+    static CORS_ORIGIN = process.env.CORS_ORIGIN?.split(",") || []
 }
