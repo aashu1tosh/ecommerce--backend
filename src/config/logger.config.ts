@@ -1,5 +1,5 @@
 import winston from 'winston';
-const { combine, timestamp, json } = winston.format;
+const { timestamp, json } = winston.format;
 
 const levels = {
     error: 0,
@@ -10,7 +10,6 @@ const levels = {
     debug: 5,
     silly: 6
 };
-
 
 const transports = [
     new winston.transports.File({ filename: 'log/error.log', level: 'error' }),
