@@ -3,6 +3,7 @@ import express, { Application } from "express";
 import morgan from 'morgan';
 import { DotenvConfig } from "../config/env.config";
 import routes from "../routes/index.route";
+import { errorHandler } from "./errorHandler.middleware";
 
 const middleware = (app: Application) => {
     const allowedOrigins = DotenvConfig.CORS_ORIGIN
@@ -28,6 +29,9 @@ const middleware = (app: Application) => {
     // })
     // app.set('view engine', 'ejs');
     // app.set('views', path.join(__dirname, '../', 'views'))
+
+    app.use(errorHandler)
+
 
 }
 
