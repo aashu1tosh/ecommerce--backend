@@ -28,7 +28,3 @@ class Print {
 }
 
 export default Print
-
-
-
-
