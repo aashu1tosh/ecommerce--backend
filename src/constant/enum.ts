@@ -5,5 +5,6 @@ export enum Environment {
 
 export enum ROLE {
     USER = 'USER',
-    AGENT = 'AGENT'
+    VENDOR = 'VENDOR',
+    ADMIN = 'ADMIN'
 }
