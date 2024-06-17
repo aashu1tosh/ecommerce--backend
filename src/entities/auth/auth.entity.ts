@@ -13,6 +13,9 @@ export class Auth extends Base {
     })
     email: string
 
+    @Column()
+    password: string
+
     @Column({
         unique: true
     })
