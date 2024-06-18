@@ -1,4 +1,5 @@
 import { Column, Entity } from "typeorm";
+import { ROLE } from "../../constant/enum";
 import Base from "../base.entity";
 
 
@@ -17,10 +18,11 @@ export class Auth extends Base {
     password: string
 
     @Column({
-        unique: true
+        unique: true,
+        nullable: true
     })
     phone: string
 
     @Column()
-    role: string
+    role: ROLE
 }

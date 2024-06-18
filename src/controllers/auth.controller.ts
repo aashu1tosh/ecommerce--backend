@@ -3,6 +3,7 @@ import { StatusCodes } from "../constant/statusCodes";
 // import { AuthService } from '../services/auth.service';
 import authServices from '../services/auth.service';
 
+
 class AuthController {
     async createUser(req: Request, res: Response) {
         await authServices.createUser(req.body);
@@ -18,6 +19,17 @@ class AuthController {
         res.status(StatusCodes.ACCEPTED).json({
             success: true,
             message: "Login Successful",
+            main: [
+                user
+            ]
+        })
+    }
+
+    async googleLogin(req: Request, res: Response) {
+        const user = await authServices.googleLogin(req.body.googleId);
+        res.status(StatusCodes.ACCEPTED).json({
+            success: true,
+            message: "Operation Successful",
             main: [
                 user
             ]
