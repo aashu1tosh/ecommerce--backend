@@ -1,6 +1,7 @@
 import { Request, Response, Router } from "express"
 import auth from './auth.route'
 import ping from './ping.route'
+import admin from './admin.route'
 interface Route {
     path: string,
     route: Router
@@ -26,7 +27,7 @@ const routes: Route[] = [
     },
     {
         path: '/admin',
-        route: ping
+        route: admin
     }
 ]
 
@@ -37,7 +38,7 @@ routes.forEach((route) => {
 router.get('/', (req: Request, res: Response) => {
     res.send({
         success: true,
-        message: 'Welcome to Real State API',
+        message: 'Welcome to E-Commerce API',
         main: []
     })
 })
