@@ -2,6 +2,7 @@ import {
     IsEmail,
     IsEnum,
     IsNotEmpty,
+    IsString,
     Length,
     Matches
 } from 'class-validator';
@@ -44,4 +45,10 @@ export class LoginUserDTO {
         message: 'Password must contain at least one uppercase letter and one lowercase letter',
     })
     password!: string;
+}
+
+export class GoogleLoginDTO {
+    @IsNotEmpty()
+    @IsString()
+    googleId: string
 }
