@@ -12,39 +12,39 @@ import { passwordRegex, phoneNumberRegex } from '../utils/regex';
 export class CreateUserDTO {
     @IsNotEmpty()
     @Length(5, 30)
-    name!: string;
+    name: string;
 
     @IsNotEmpty()
     @IsEmail()
-    email!: string;
+    email: string;
 
     @IsNotEmpty()
     @Matches(passwordRegex, {
         message: 'Password must contain at least one uppercase letter and one lowercase letter',
     })
-    password!: string;
+    password: string;
 
     @IsNotEmpty()
     @Matches(phoneNumberRegex, {
         message: 'Enter a valid phone number'
     })
-    phone!: string;
+    phone: string;
 
-    @IsEnum(ROLE)
     @IsNotEmpty()
-    role!: string;
+    @IsEnum(ROLE)
+    role: string;
 }
 
 export class LoginUserDTO {
     @IsNotEmpty()
     @IsEmail()
-    email!: string;
+    email: string;
 
     @IsNotEmpty()
     @Matches(passwordRegex, {
         message: 'Password must contain at least one uppercase letter and one lowercase letter',
     })
-    password!: string;
+    password: string;
 }
 
 export class GoogleLoginDTO {
