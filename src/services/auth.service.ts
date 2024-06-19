@@ -8,7 +8,6 @@ import webtokenService from "./webtoken.service";
 
 class AuthService {
 
-
     constructor(
         private readonly AuthRepo = AppDataSource.getRepository(Auth),
         private readonly bcryptService = new BcryptService(),
@@ -77,7 +76,7 @@ class AuthService {
                 user.name = decoded.name
                 user.email = decoded.email
                 user.password = await this.bcryptService.hash(decoded.sub)
-                user.role = ROLE.USER;
+                user.role = ROLE.CUSTOMER;
 
                 const google_user = await this.AuthRepo.save(user);
                 const { password, createdAt, deletedAt, ...response } = google_user;
