@@ -46,14 +46,11 @@ const getValidationMessage = (errors: ValidationError[], message: string[]) => {
 export default class RequestValidator {
     static validate = (classInstance: any) => {
         return async (req: Request, res: Response, next: NextFunction) => {
-            // console.log(req.body, 'requestbody')
             const convertedObject = plainToClass(classInstance, req.body)
-            // console.log(convertedObject, "converted object")
             const validationMessage: string[] = []
             const response = await validate(convertedObject, {
                 whitelist: true, forbidNonWhitelisted: true
             })
-            // console.log(response);
 
             if (response.length !== 0) {
                 getValidationMessage(response, validationMessage)
