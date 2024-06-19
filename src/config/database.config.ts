@@ -12,9 +12,6 @@ export const AppDataSource = new DataSource({
   logging: false,
   dropSchema: false,
   synchronize: true,
-  // eslint-disable-next-line n/no-path-concat
   entities: [__dirname + '/../entities/**/*.entity{.ts,.js}'],
-  migrations: ['src/migration/**/*.ts'],
-  subscribers: [],
 })
 

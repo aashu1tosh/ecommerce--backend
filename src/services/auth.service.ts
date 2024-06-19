@@ -4,19 +4,19 @@ import { ROLE } from "../constant/enum";
 import { Auth } from "../entities/auth/auth.entity";
 import HttpException from "../utils/HttpException.utils";
 import BcryptService from "./bcrypt.service";
-import Print from "../utils/print";
+import webtokenService from "./webtoken.service";
 
 class AuthService {
 
 
     constructor(
         private readonly AuthRepo = AppDataSource.getRepository(Auth),
-        private readonly bcryptService = new BcryptService()
+        private readonly bcryptService = new BcryptService(),
+        private readonly webTokenGenerate = webtokenService
     ) { }
 
     async createUser(data: Auth) {
         try {
-            console.log(data, "data arg printed")
             const user = this.AuthRepo.create(data);
 
             const uniqueEmail = this.AuthRepo.findOne({
@@ -35,12 +35,9 @@ class AuthService {
             }
             const hash = await this.bcryptService.hash(data?.password);
             user.password = hash;
-            const response = await this.AuthRepo.save(user);
-            console.log(response)
+            await this.AuthRepo.save(user);
             return null;
         } catch (error: any) {
-            // console.log("yeta aako error")
-            // console.log(error)
             throw HttpException.badRequest(error?.message)
         }
 
@@ -56,8 +53,9 @@ class AuthService {
             if (user) {
                 if (await this.bcryptService.compare(data.password, user.password)) {
                     // { user?.password, ...response } = user
+                    const token = this.webTokenGenerate.sign(user?.id as string)
                     const { password, createdAt, deletedAt, ...response } = user
-                    return response
+                    return { data: response, token: { accessToken: token } }
                 }
             }
             throw HttpException.unauthorized("Invalid Credentials");
@@ -85,9 +83,7 @@ class AuthService {
                 const { password, createdAt, deletedAt, ...response } = google_user;
                 return response
             } catch (error) {
-                console.log(error)
-                Print.error("Error occured");
-                // throw HttpException.badRequest("Invalid Credentials")
+                throw HttpException.conflict("Invalid Credentials")
             }
         }
     }

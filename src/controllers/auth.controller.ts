@@ -10,18 +10,16 @@ class AuthController {
         res.status(StatusCodes.CREATED).json({
             success: true,
             message: "Created Successfully",
-            main: []
+            main: null
         })
     }
 
     async login(req: Request, res: Response) {
-        const user = await authServices.loginUser(req.body)
+        const response = await authServices.loginUser(req.body)
         res.status(StatusCodes.ACCEPTED).json({
             success: true,
             message: "Login Successful",
-            main: [
-                user
-            ]
+            main: response
         })
     }
 
@@ -30,9 +28,7 @@ class AuthController {
         res.status(StatusCodes.ACCEPTED).json({
             success: true,
             message: "Operation Successful",
-            main: [
-                user
-            ]
+            main: user
         })
     }
 }
