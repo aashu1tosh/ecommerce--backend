@@ -3,8 +3,14 @@ import AdminController from '../controllers/admin.controller'
 import { catchAsync } from '../utils/catchAsync.utils'
 import RequestValidator from '../middleware/Request.Validator';
 import { ResetPasswordDTO } from '../dto/admin.dto';
+import { authentication } from '../middleware/authentication.middleware';
+import { authorization } from '../middleware/authorization.middleware';
+import { ROLE } from '../constant/enum';
 
-const router = express.Router()
+const router = express.Router();
+
+router.use(authentication());
+router.use(authorization([ROLE.ADMIN]))
 
 const adminController = new AdminController();
 
