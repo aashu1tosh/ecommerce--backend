@@ -16,6 +16,21 @@ class VendorController {
             main: null,
         });
     }
+
+    async deleteItem(req: Request, res: Response) {
+        const itemId = req?.params.id;
+        const vendorId = res?.locals?.id?.id;
+        if (!itemId && !vendorId) {
+            throw HttpException.badRequest('Error while of vendor or item.');
+        }
+
+        await vendorService.deleteItem(itemId, vendorId);
+        res.status(StatusCodes.CREATED).json({
+            success: true,
+            message: 'Item Deletion Successful',
+            main: null,
+        });
+    }
 }
 
 export default VendorController;

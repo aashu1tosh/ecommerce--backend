@@ -20,4 +20,6 @@ router.post(
     catchAsync(vendorController.createItem)
 );
 
+router.delete('/:id', catchAsync(vendorController.deleteItem));
+
 export default router;

@@ -17,6 +17,31 @@ class vendorService {
             throw HttpException.badRequest(error?.message);
         }
     }
+
+    async getById(id: string) {
+        try {
+        } catch (error: any) {
+            throw HttpException.badRequest(error?.message);
+        }
+    }
+
+    async deleteItem(itemId: string, vendorId: any) {
+        try {
+            const item = await this.vendorItem
+                .createQueryBuilder('vendor')
+                .delete()
+                .from(VendorItem)
+                .where('id = :id and vendorId = :vendorId', {
+                    id: itemId,
+                    vendorId: vendorId,
+                })
+                .execute();
+            if (!item?.affected)
+                throw HttpException.badRequest('Item Id not found');
+        } catch (error: any) {
+            throw HttpException.badRequest(error?.message);
+        }
+    }
 }
 
 export default new vendorService();
