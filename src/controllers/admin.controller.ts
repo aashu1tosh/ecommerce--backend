@@ -1,14 +1,22 @@
 import { type Request, type Response } from 'express';
 import { StatusCodes } from '../constant/statusCodes';
 import adminService from '../services/admin.service';
+import { getPaginationData, paginationValidator } from '../utils/pagination';
 
 class AdminController {
     async getAll(req: Request, res: Response) {
-        const response = await adminService.getAll();
+        const [page, perpage] = paginationValidator(
+            req.query.page as string,
+            req.query.perpage as string
+        );
+        const response = await adminService.getAll(page, perpage);
         res.status(StatusCodes.ACCEPTED).json({
             success: true,
             message: 'Fetch Successful',
-            main: { response },
+            main: {
+                data: response.data,
+                pagination: getPaginationData(response.total, page, perpage),
+            },
         });
     }
 

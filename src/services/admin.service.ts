@@ -11,8 +11,8 @@ class AdminService {
         private readonly bcrpytService = new BcryptService()
     ) {}
 
-    async getAll() {
-        const response = await this.AuthRepo.createQueryBuilder('auth')
+    async getAll(page: number, perpage: number) {
+        const query = this.AuthRepo.createQueryBuilder('auth')
             .select([
                 'auth.id',
                 'auth.name',
@@ -20,9 +20,15 @@ class AdminService {
                 'auth.phone',
                 'auth.role',
             ])
-            .where('auth.role != :role', { role: 'ADMIN' })
-            .getMany();
-        return response;
+            .where('auth.role != :role', { role: 'ADMIN' });
+
+        query
+            .orderBy('auth.createdAt')
+            .limit(perpage)
+            .offset((page - 1) * perpage);
+
+        const [data, total] = await query.getManyAndCount();
+        return { data, total };
     }
 
     async getById(id: string) {
