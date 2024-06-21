@@ -45,7 +45,6 @@ class AdminService {
     }
 
     async resetPassword(data: ResetPasswordDTO) {
-        console.log(data);
         const hash = await this.bcrpytService.hash(data?.newPassword);
         const response = await this.AuthRepo.createQueryBuilder()
             .update(Auth)
