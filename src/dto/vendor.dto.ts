@@ -1,28 +1,23 @@
-import {
-    IsEmail,
-    IsEnum,
-    IsNotEmpty,
-    IsString,
-    Length,
-    Matches,
-} from 'class-validator';
-import { ROLE } from '../constant/enum';
-import { passwordRegex, phoneNumberRegex } from '../utils/regex';
+import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
 
 export class PostItemDTO {
     @IsNotEmpty()
-    @Length(5, 30)
+    @Length(2, 30)
     name: string;
 
     @IsNotEmpty()
-    price: string;
+    @IsString()
+    price: number;
 
     @IsNotEmpty()
-    image: string;
-
-    @IsNotEmpty()
+    @IsString()
     description: string;
 
     @IsNotEmpty()
+    @IsString()
     tags: string[];
+
+    @IsOptional()
+    @IsString()
+    image: string;
 }

@@ -17,12 +17,9 @@ export const authentication = () => {
             if (mode !== 'Bearer' || !accessToken)
                 throw HttpException.unauthorized(Message.unAuthorized);
 
-            // {id, iat,exp} type of payload
             const payload = webtokenService.verify(accessToken) as IJwtPayload;
             const _id = payload?.id as string;
-            // console.log(payload, "payload");
             const role = await rolesService.getRole(_id);
-            // console.log(role)
 
             if (payload) {
                 res.locals.id = payload;

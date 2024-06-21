@@ -16,7 +16,7 @@ const adminController = new AdminController();
 
 router.get('/', catchAsync(adminController.getAll));
 
-router.post(
+router.patch(
     '/reset-password',
     RequestValidator.validate(ResetPasswordDTO),
     catchAsync(adminController.resetPassword)

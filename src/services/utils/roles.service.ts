@@ -11,7 +11,6 @@ class RoleService {
             .select(['auth.role'])
             .where('auth.id = :id', { id: id })
             .getOne();
-        // console.log(role);
         return response?.role;
     }
 }
