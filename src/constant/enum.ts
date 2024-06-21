@@ -1,10 +1,10 @@
 export enum Environment {
-  DEVELOPMENT = "DEVELOPMENT",
-  PRODUCTION = "PRODUCTION",
+    DEVELOPMENT = 'DEVELOPMENT',
+    PRODUCTION = 'PRODUCTION',
 }
 
 export enum ROLE {
-  CUSTOMER = "CUSTOMER",
-  VENDOR = "VENDOR",
-  ADMIN = "ADMIN",
+    CUSTOMER = 'CUSTOMER',
+    VENDOR = 'VENDOR',
+    ADMIN = 'ADMIN',
 }

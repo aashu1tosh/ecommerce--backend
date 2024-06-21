@@ -1,36 +1,35 @@
-import { type Request, type Response } from "express";
-import { StatusCodes } from "../constant/statusCodes";
+import { type Request, type Response } from 'express';
+import { StatusCodes } from '../constant/statusCodes';
 // import { AuthService } from '../services/auth.service';
 import authServices from '../services/auth.service';
-
 
 class AuthController {
     async createUser(req: Request, res: Response) {
         await authServices.createUser(req.body);
         res.status(StatusCodes.CREATED).json({
             success: true,
-            message: "Created Successfully",
-            main: null
-        })
+            message: 'Created Successfully',
+            main: null,
+        });
     }
 
     async login(req: Request, res: Response) {
-        const response = await authServices.loginUser(req.body)
+        const response = await authServices.loginUser(req.body);
         res.status(StatusCodes.ACCEPTED).json({
             success: true,
-            message: "Login Successful",
-            main: response
-        })
+            message: 'Login Successful',
+            main: response,
+        });
     }
 
     async googleLogin(req: Request, res: Response) {
         const user = await authServices.googleLogin(req.body.googleId);
         res.status(StatusCodes.ACCEPTED).json({
             success: true,
-            message: "Operation Successful",
-            main: user
-        })
+            message: 'Operation Successful',
+            main: user,
+        });
     }
 }
 
-export default AuthController
+export default AuthController;
