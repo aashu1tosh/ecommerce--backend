@@ -2,7 +2,7 @@ import { Column, Entity } from 'typeorm';
 import Base from '../base.entity';
 
 import { JoinColumn, ManyToOne } from 'typeorm';
-import { Auth } from './../auth/auth.entity'; // Adjust the import path as necessary
+import { Auth } from './../auth/auth.entity'
 
 @Entity('VendorItem')
 export class VendorItem extends Base {
@@ -15,7 +15,7 @@ export class VendorItem extends Base {
     @Column()
     description: string;
 
-    @Column('simple-array')
+    @Column({ name: 'tags', array: true })
     tags: string[];
 
     @ManyToOne(() => Auth)
