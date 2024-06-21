@@ -1,5 +1,6 @@
 export const Message = {
-    passwordShouldStrong: 'Password must contain one uppercase, one digit and minimum of 8 characters',
+    passwordShouldStrong:
+        'Password must contain one uppercase, one digit and minimum of 8 characters',
     passwordShouldMatch: 'Passwords should match',
     validPhoneNumber: 'Invalid Phone number',
     notFound: 'Not Found',
@@ -20,4 +21,4 @@ export const Message = {
     alreadyExist: 'already exists',
     alreadyPublished: 'Already published',
     emailSent: 'We have sent code to your email address',
-  }
+};

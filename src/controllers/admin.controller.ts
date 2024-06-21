@@ -1,26 +1,34 @@
-import { type Request, type Response } from "express";
-import { StatusCodes } from "../constant/statusCodes";
-import adminService from "../services/admin.service";
+import { type Request, type Response } from 'express';
+import { StatusCodes } from '../constant/statusCodes';
+import adminService from '../services/admin.service';
 
 class AdminController {
     async getAll(req: Request, res: Response) {
         const response = await adminService.getAll();
         res.status(StatusCodes.ACCEPTED).json({
             success: true,
-            message: "Fetch Successful",
-            main: { response }
-        })
+            message: 'Fetch Successful',
+            main: { response },
+        });
     }
 
     async resetPassword(req: Request, res: Response) {
-        const response = await adminService.resetPassword();
+        await adminService.resetPassword(req.body);
         res.status(StatusCodes.ACCEPTED).json({
             success: true,
-            message: "Password Reset Successful",
-            main: null
-        })
+            message: 'Password Reset Successful',
+            main: {},
+        });
     }
 
+    async deleteUser(req: Request, res: Response) {
+        await adminService.deleteUser(req.params.id);
+        res.status(StatusCodes.ACCEPTED).json({
+            success: true,
+            message: 'User Deletion Successful',
+            main: {},
+        });
+    }
 }
 
-export default AdminController
+export default AdminController;
