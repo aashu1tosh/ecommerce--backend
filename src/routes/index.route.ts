@@ -1,7 +1,7 @@
 import { Request, Response, Router } from 'express';
+import admin from './admin.route';
 import auth from './auth.route';
 import ping from './ping.route';
-import admin from './admin.route';
 import vendor from './vendor.route';
 
 interface Route {
@@ -41,7 +41,6 @@ router.get('/', (req: Request, res: Response) => {
     res.send({
         success: true,
         message: 'Welcome to E-Commerce API',
-        main: [],
     });
 });
 
