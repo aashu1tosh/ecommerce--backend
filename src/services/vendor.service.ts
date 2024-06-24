@@ -9,6 +9,15 @@ class vendorService {
 
     async createItem(data: VendorItem, id: string) {
         try {
+            const existingMedia = await this.vendorItem
+                .createQueryBuilder('item')
+                .select(['item.mediaId'])
+                .where('item.mediaId = :id', { id: data.mediaId })
+                .getOne();
+
+            if (existingMedia) {
+                throw HttpException.badRequest('Media Id can not be reused');
+            }
             const item = this.vendorItem.create(data);
             item.vendorId = id;
             const response = await this.vendorItem.save(item);
