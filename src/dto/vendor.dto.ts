@@ -1,12 +1,19 @@
-import { IsNotEmpty, IsOptional, IsString, Length } from 'class-validator';
+import {
+    IsArray,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
+    Length,
+} from 'class-validator';
 
 export class PostItemDTO {
     @IsNotEmpty()
-    @Length(2, 30)
+    @Length(3, 30)
     name: string;
 
     @IsNotEmpty()
-    @IsString()
+    @IsNumber()
     price: number;
 
     @IsNotEmpty()
@@ -14,10 +21,20 @@ export class PostItemDTO {
     description: string;
 
     @IsNotEmpty()
-    @IsString()
+    @IsArray()
+    @IsString({ each: true })
     tags: string[];
 
-    @IsOptional()
     @IsString()
-    image: string;
+    mediaId: string;
+}
+
+export class MediaUploadDTO {
+    @IsNotEmpty()
+    @IsString()
+    filename: string;
+
+    @IsNotEmpty()
+    @IsString()
+    filepath: string;
 }
