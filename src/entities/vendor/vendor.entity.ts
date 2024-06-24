@@ -5,7 +5,6 @@ import { JoinColumn, ManyToOne } from 'typeorm';
 import { Auth } from './../auth/auth.entity';
 import { Media } from './media.entity';
 
-
 @Entity('VendorItem')
 export class VendorItem extends Base {
     @Column()
@@ -17,7 +16,7 @@ export class VendorItem extends Base {
     @Column()
     description: string;
 
-    @Column("text", { array: true, nullable: true })
+    @Column('text', { array: true, nullable: true })
     tags: string[];
 
     @ManyToOne(() => Auth)
