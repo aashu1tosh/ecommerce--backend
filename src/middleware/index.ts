@@ -26,10 +26,7 @@ const middleware = (app: Application) => {
         })
     );
 
-    // app.use(express.static(path.join(__dirname, '../', 'public')));
-    // app.use(express.static('public'))
-
-    app.use(express.static(path.join(__dirname, '../', '../', 'public/')))
+    app.use(express.static(path.join(__dirname, '../', '../', 'public/')));
 
     app.use(morgan('common'));
     app.use('/api/v1', routes);
