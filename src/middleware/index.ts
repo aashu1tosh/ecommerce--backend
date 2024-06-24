@@ -1,6 +1,7 @@
 import cors from 'cors';
 import express, { Application } from 'express';
 import morgan from 'morgan';
+import path from 'path';
 import { DotenvConfig } from '../config/env.config';
 import routes from '../routes/index.route';
 import { errorHandler } from './errorHandler.middleware';
@@ -24,14 +25,14 @@ const middleware = (app: Application) => {
             limit: '10mb',
         })
     );
+
+    // app.use(express.static(path.join(__dirname, '../', 'public')));
+    // app.use(express.static('public'))
+
+    app.use(express.static(path.join(__dirname, '../', '../', 'public/')))
+
     app.use(morgan('common'));
     app.use('/api/v1', routes);
-
-    // app.use('/', (_, res: Response) => {
-    //     res.render('index')
-    // })
-    // app.set('view engine', 'ejs');
-    // app.set('views', path.join(__dirname, '../', 'views'))
 
     app.use(errorHandler);
 };
