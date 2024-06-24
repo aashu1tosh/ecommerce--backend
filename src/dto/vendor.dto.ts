@@ -1,4 +1,11 @@
-import { IsArray, IsNotEmpty, IsNumber, IsOptional, IsString, Length } from 'class-validator';
+import {
+    IsArray,
+    IsNotEmpty,
+    IsNumber,
+    IsOptional,
+    IsString,
+    Length,
+} from 'class-validator';
 
 export class PostItemDTO {
     @IsNotEmpty()
