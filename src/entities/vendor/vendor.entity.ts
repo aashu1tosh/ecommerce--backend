@@ -1,8 +1,10 @@
-import { Column, Entity } from 'typeorm';
+import { Column, Entity, OneToOne } from 'typeorm';
 import Base from '../base.entity';
 
 import { JoinColumn, ManyToOne } from 'typeorm';
-import { Auth } from './../auth/auth.entity'
+import { Auth } from './../auth/auth.entity';
+import { Media } from './media.entity';
+
 
 @Entity('VendorItem')
 export class VendorItem extends Base {
@@ -15,7 +17,7 @@ export class VendorItem extends Base {
     @Column()
     description: string;
 
-    @Column({ name: 'tags', array: true })
+    @Column("text", { array: true, nullable: true })
     tags: string[];
 
     @ManyToOne(() => Auth)
@@ -24,4 +26,11 @@ export class VendorItem extends Base {
 
     @Column()
     vendorId: string; // Foreign key column
+
+    @OneToOne(() => Media)
+    @JoinColumn({ name: 'mediaId' })
+    media: Media;
+
+    @Column()
+    mediaId: string;
 }
