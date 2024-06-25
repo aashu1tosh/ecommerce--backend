@@ -18,6 +18,12 @@ export class DotenvConfig {
     static JWT_SECRET = process.env.JWT_SECRET;
     static JWT_TOKEN_EXPIRE = process.env.JWT_TOKEN_EXPIRE;
 
+    // BACKEND URL
+    static BACKEND_URL = process.env
+        .BACKEND_URL!.concat(':')
+        .concat(process.env.PORT!)
+        .concat('/');
+
     // CORS LIST
     static CORS_ORIGIN = process.env.CORS_ORIGIN?.split(',') || [];
 }

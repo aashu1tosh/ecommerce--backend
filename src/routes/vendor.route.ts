@@ -27,6 +27,8 @@ router.post(
     catchAsync(mediaController.create)
 );
 
+router.get('/products', catchAsync(vendorController.getAll));
+
 router.delete('/:id', catchAsync(vendorController.deleteItem));
 
 export default router;
