@@ -1,4 +1,5 @@
 import { AppDataSource } from '../config/database.config';
+import { DotenvConfig } from '../config/env.config';
 import { VendorItem } from '../entities/vendor/vendor.entity';
 import HttpException from '../utils/HttpException.utils';
 
@@ -24,6 +25,33 @@ class vendorService {
             return response;
         } catch (error: any) {
             throw HttpException.badRequest(error?.message);
+        }
+    }
+
+    async getAll() {
+        try {
+            const result = await this.vendorItem
+                .createQueryBuilder('p')
+                .select([
+                    'p.name AS name',
+                    'p.price AS price',
+                    'p.description AS description',
+                    'p.vendorId AS vendor_id',
+                    'm.filepath AS image_url',
+                ])
+                .innerJoin('p.media', 'm')
+                .execute();
+
+            result.forEach((obj: { image_url: string }) => {
+                obj.image_url =
+                    DotenvConfig.BACKEND_URL +
+                    obj.image_url.split('public/')[1];
+            });
+
+            return result;
+        } catch (error) {
+            console.log(error);
+            throw HttpException.internalServerError('Something went south.');
         }
     }
 
