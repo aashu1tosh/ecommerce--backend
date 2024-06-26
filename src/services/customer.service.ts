@@ -1,4 +1,5 @@
 import { AppDataSource } from '../config/database.config';
+import { DotenvConfig } from '../config/env.config';
 import { VendorItem } from '../entities/vendor/vendor.entity';
 import HttpException from '../utils/HttpException.utils';
 
@@ -32,13 +33,15 @@ class CustomerService {
                 .offset((page - 1) * perpage);
 
             const data = await result.execute();
+            
+            data.forEach((obj: { image_url: string }) => {
+                obj.image_url =
+                    DotenvConfig.BACKEND_URL +
+                    obj.image_url.split('public/')[1];
+            });
 
             const total = await count_query.getCount();
             return { data, total };
-
-            // const [data, total] = await result.getManyAndCount();
-            // return { data, total };
-            // return result;
         } catch (error: any) {
             throw HttpException.badRequest(error?.message);
         }
