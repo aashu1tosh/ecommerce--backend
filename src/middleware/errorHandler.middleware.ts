@@ -10,8 +10,6 @@ export const errorHandler = (
     let data = {
         success: false,
         message: 'Error Occurred',
-        main: [],
-        // ...(DotenvConfig.DEBUG_MODE === 'true' && { originalError: error.message }),
     };
     if (error?.isOperational || error?.isCustom) {
         statusCode = error.statusCode;
