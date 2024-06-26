@@ -1,5 +1,6 @@
 import { type Request, type Response } from 'express';
 import { StatusCodes } from '../constant/statusCodes';
+import authService from '../services/auth.service';
 import customerService from '../services/customer.service';
 import { getPaginationData, paginationValidator } from '../utils/pagination';
 
@@ -12,7 +13,7 @@ class CustomerController {
 
         const response = await customerService.getAll(page, perpage);
 
-        res.status(StatusCodes.ACCEPTED).json({
+        res.status(StatusCodes.SUCCESS).json({
             success: true,
             message: 'Data Fetch Success',
             main: {
