@@ -33,7 +33,7 @@ class CustomerService {
                 .offset((page - 1) * perpage);
 
             const data = await result.execute();
-            
+
             data.forEach((obj: { image_url: string }) => {
                 obj.image_url =
                     DotenvConfig.BACKEND_URL +
