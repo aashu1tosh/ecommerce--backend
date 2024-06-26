@@ -52,7 +52,6 @@ class vendorService {
 
             return result;
         } catch (error) {
-            console.log(error);
             throw HttpException.internalServerError('Something went south.');
         }
     }

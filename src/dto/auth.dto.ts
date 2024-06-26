@@ -54,3 +54,15 @@ export class GoogleLoginDTO {
     @IsString()
     googleId: string;
 }
+
+export class UpdatePasswordDTO {
+    @IsNotEmpty()
+    oldPassword: string;
+
+    @IsNotEmpty()
+    @Matches(passwordRegex, {
+        message:
+            'New Password must contain at least one uppercase letter and one lowercase letter',
+    })
+    newPassword: string;
+}
