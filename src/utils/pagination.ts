@@ -5,7 +5,7 @@ export const paginationValidator = (
     const page = !Number.isNaN(parseInt(pageCount)) ? parseInt(pageCount) : 1;
     const perpage = !Number.isNaN(parseInt(perpageCount))
         ? parseInt(perpageCount)
-        : 1;
+        : 10;
     return [page, perpage];
 };
 
