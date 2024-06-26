@@ -1,6 +1,7 @@
 import { jwtDecode } from 'jwt-decode';
 import { AppDataSource } from '../config/database.config';
 import { ROLE } from '../constant/enum';
+import { UpdatePasswordDTO } from '../dto/auth.dto';
 import { Auth } from '../entities/auth/auth.entity';
 import HttpException from '../utils/HttpException.utils';
 import BcryptService from './bcrypt.service';
@@ -44,7 +45,6 @@ class AuthService {
 
     async loginUser(data: Auth) {
         try {
-            // const response = {}
             let user = await this.AuthRepo.findOne({
                 where: { email: data?.email },
             });
@@ -56,7 +56,6 @@ class AuthService {
                         user.password
                     )
                 ) {
-                    // { user?.password, ...response } = user
                     const token = this.webTokenGenerate.sign(
                         user?.id as string
                     );
@@ -92,6 +91,39 @@ class AuthService {
             } catch (error) {
                 throw HttpException.conflict('Invalid Credentials');
             }
+        }
+    }
+
+    async updatePassword(data: UpdatePasswordDTO, id: string) {
+        if (data.oldPassword === data.newPassword)
+            throw HttpException.conflict(
+                'New password should differ from old password.'
+            );
+
+        let user = await this.AuthRepo.findOne({
+            where: { id: id },
+        });
+        if (user) {
+            if (
+                await this.bcryptService.compare(
+                    data.oldPassword,
+                    user.password
+                )
+            ) {
+                try {
+                    const password = await this.bcryptService.hash(
+                        data.newPassword
+                    );
+                    await this.AuthRepo.createQueryBuilder()
+                        .update('Auth')
+                        .set({ password: password })
+                        .where('id = :id', { id })
+                        .execute();
+                } catch (error: any) {
+                    throw HttpException.conflict(error?.message);
+                }
+            } else throw HttpException.badRequest('Invalid Credential');
+            return null;
         }
     }
 }
