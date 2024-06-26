@@ -1,6 +1,7 @@
 import { AppDataSource } from '../config/database.config';
 import { DotenvConfig } from '../config/env.config';
 import { VendorItem } from '../entities/vendor/vendor.entity';
+import mediaService from '../services/media.service';
 import HttpException from '../utils/HttpException.utils';
 
 class vendorService {
@@ -28,7 +29,7 @@ class vendorService {
         }
     }
 
-    async getAll() {
+    async getAll(id: string) {
         try {
             const result = await this.vendorItem
                 .createQueryBuilder('p')
@@ -40,6 +41,7 @@ class vendorService {
                     'm.filepath AS image_url',
                 ])
                 .innerJoin('p.media', 'm')
+                .where('p.vendorId = :id', { id: id })
                 .execute();
 
             result.forEach((obj: { image_url: string }) => {
@@ -57,13 +59,34 @@ class vendorService {
 
     async getById(id: string) {
         try {
+            const result = await this.vendorItem
+                .createQueryBuilder('p')
+                .select([
+                    'p.name AS name',
+                    'p.price AS price',
+                    'p.description AS description',
+                    'p.vendorId AS vendor_id',
+                    'm.id AS image_id',
+                    'm.filepath AS image_url',
+                ])
+                .innerJoin('p.media', 'm')
+                .where('p.id = :id', { id: id })
+                .execute();
+
+            return result;
         } catch (error: any) {
             throw HttpException.badRequest(error?.message);
         }
     }
 
-    async deleteItem(itemId: string, vendorId: any) {
+    async deleteItem(itemId: string, vendorId: string) {
         try {
+            const check = await this.getById(itemId);
+
+            const mediaDelete = await mediaService.deleteMedia(
+                check.image_id as string
+            );
+
             const item = await this.vendorItem
                 .createQueryBuilder('vendor')
                 .delete()

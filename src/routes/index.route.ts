@@ -3,6 +3,7 @@ import admin from './admin.route';
 import auth from './auth.route';
 import ping from './ping.route';
 import vendor from './vendor.route';
+import customer from './customer.route';
 
 interface Route {
     path: string;
@@ -21,7 +22,7 @@ const routes: Route[] = [
     },
     {
         path: '/customer',
-        route: ping,
+        route: customer,
     },
     {
         path: '/vendor',

@@ -5,10 +5,10 @@ import HttpException from '../utils/HttpException.utils';
 
 class VendorController {
     async getAll(_: Request, res: Response) {
-        console.log('get all called');
-        const response = await vendorService.getAll();
+        const id = res?.locals?.id?.id;
+        const response = await vendorService.getAll(id);
 
-        res.status(StatusCodes.CREATED).json({
+        res.status(StatusCodes.ACCEPTED).json({
             success: true,
             message: 'Data Fetch Success',
             main: response,
