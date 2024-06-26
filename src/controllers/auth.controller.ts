@@ -1,7 +1,10 @@
 import { type Request, type Response } from 'express';
 import { StatusCodes } from '../constant/statusCodes';
 // import { AuthService } from '../services/auth.service';
-import authServices from '../services/auth.service';
+import {
+    default as authService,
+    default as authServices,
+} from '../services/auth.service';
 
 class AuthController {
     async createUser(req: Request, res: Response) {
@@ -28,6 +31,14 @@ class AuthController {
             success: true,
             message: 'Operation Successful',
             main: user,
+        });
+    }
+
+    async updatePassword(req: Request, res: Response) {
+        await authService.updatePassword(req.body, res?.locals?.id?.id);
+        res.status(StatusCodes.SUCCESS).json({
+            success: true,
+            message: 'Password updated successfully',
         });
     }
 }
