@@ -8,20 +8,16 @@ import Print from '../utils/print';
 
 async function seedAdmin(data: IAdmin) {
     try {
-        console.log('code reached here');
-
         await AppDataSource.initialize();
         const authRepo = AppDataSource.getRepository(Auth);
         const bcrpytService = new BcryptService();
 
-        console.log(authRepo);
         const existingAdmin = await authRepo
             .createQueryBuilder('auth')
             .where('auth.email = :email', { email: data.email })
             .orWhere('auth.phone = :phone', { phone: data.phone })
             .getOne();
 
-        console.log(existingAdmin);
         if (existingAdmin) {
             throw HttpException.conflict('Phone or email must be unique.');
         }
