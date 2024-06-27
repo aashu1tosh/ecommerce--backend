@@ -35,7 +35,8 @@ class AuthController {
     }
 
     async updatePassword(req: Request, res: Response) {
-        await authService.updatePassword(req.body, res?.locals?.id?.id);
+        const id = res?.locals?.id?.id
+        await authService.updatePassword(req.body, id);
         res.status(StatusCodes.SUCCESS).json({
             success: true,
             message: 'Password updated successfully',
