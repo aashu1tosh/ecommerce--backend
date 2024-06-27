@@ -6,27 +6,27 @@ import BcryptService from '../services/bcrypt.service';
 import HttpException from '../utils/HttpException.utils';
 import Print from '../utils/print';
 
-
 async function seedAdmin(data: IAdmin) {
     try {
-        console.log("code reached here")
+        console.log('code reached here');
 
         await AppDataSource.initialize();
-        const authRepo = AppDataSource.getRepository(Auth)
+        const authRepo = AppDataSource.getRepository(Auth);
         const bcrpytService = new BcryptService();
 
-        console.log(authRepo)
-        const existingAdmin = await authRepo.createQueryBuilder('auth')
+        console.log(authRepo);
+        const existingAdmin = await authRepo
+            .createQueryBuilder('auth')
             .where('auth.email = :email', { email: data.email })
             .orWhere('auth.phone = :phone', { phone: data.phone })
             .getOne();
 
         console.log(existingAdmin);
         if (existingAdmin) {
-            throw HttpException.conflict("Phone or email must be unique.")
+            throw HttpException.conflict('Phone or email must be unique.');
         }
 
-        const user = authRepo.create(data)
+        const user = authRepo.create(data);
         const hash = await bcrpytService.hash(data?.password);
         user.password = hash;
         await authRepo.save(user);
@@ -37,15 +37,15 @@ async function seedAdmin(data: IAdmin) {
     }
 }
 
-const args = process.argv[2]
+const args = process.argv[2];
 if (!args) {
-    console.error('Please provide an argument')
-    process.exit(1)
+    console.error('Please provide an argument');
+    process.exit(1);
 }
 
 if (args === 'seed') {
     void seedAdmin(admins);
 } else {
-    console.error('Invalid argument')
-    process.exit(1)
+    console.error('Invalid argument');
+    process.exit(1);
 }

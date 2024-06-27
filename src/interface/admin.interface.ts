@@ -1,9 +1,9 @@
-import { ROLE } from "../constant/enum";
+import { ROLE } from '../constant/enum';
 
-export interface IAdmin  {
-    name: string,
-    email: string,
-    phone: string,
-    password: string,
-    role: ROLE
+export interface IAdmin {
+    name: string;
+    email: string;
+    phone: string;
+    password: string;
+    role: ROLE;
 }

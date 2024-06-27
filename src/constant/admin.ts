@@ -1,4 +1,4 @@
-import { ROLE } from "./enum";
+import { ROLE } from './enum';
 
 export const admins = {
     name: 'Admin dada',
@@ -6,4 +6,4 @@ export const admins = {
     phone: '943818516',
     password: 'Admin@123',
     role: ROLE.ADMIN,
-}
+};
