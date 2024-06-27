@@ -18,6 +18,9 @@ export class DotenvConfig {
     static JWT_SECRET = process.env.JWT_SECRET;
     static JWT_TOKEN_EXPIRE = process.env.JWT_TOKEN_EXPIRE;
 
+    // SEED ADMIN PASSWORD
+    static ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!;
+
     // BACKEND URL
     static BACKEND_URL = process.env
         .BACKEND_URL!.concat(':')
