@@ -26,8 +26,8 @@ export class VendorItem extends Base {
     @Column()
     vendorId: string; // Foreign key column
 
-    @OneToOne(() => Media)
-    @JoinColumn({ name: 'mediaId' })
+    @OneToOne(() => Media, { cascade: true, onDelete: 'CASCADE' })
+    @JoinColumn({ name: 'mediaId', referencedColumnName: 'id' })
     media: Media;
 
     @Column()
