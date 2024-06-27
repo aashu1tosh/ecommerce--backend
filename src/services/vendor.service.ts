@@ -1,8 +1,8 @@
 import { AppDataSource } from '../config/database.config';
 import { DotenvConfig } from '../config/env.config';
 import { VendorItem } from '../entities/vendor/vendor.entity';
-import mediaService from '../services/media.service';
 import HttpException from '../utils/HttpException.utils';
+import mediaService from './media.service';
 
 class vendorService {
     constructor(
@@ -70,33 +70,64 @@ class vendorService {
                 ])
                 .innerJoin('p.media', 'm')
                 .where('p.id = :id', { id: id })
-                .execute();
+                .getRawOne(); // Use getRawOne() to get raw data with aliases
 
             return result;
         } catch (error: any) {
             throw HttpException.badRequest(error?.message);
         }
     }
+    // commenting
+    // async deleteItem(itemId: string, vendorId: string) {
+    //     console.log(itemId, vendorId)
+    //     try {
+    //         const check = await this.getById(itemId);
+
+    //         if (check) {
+    //             await this.vendorItem.manager.transaction(async transactionalEntityManager => {
+    //                 // Load the VendorItem entity with its related Media
+    //                 const item = await transactionalEntityManager.findOne(VendorItem, {
+    //                     where: { id: itemId, vendorId: vendorId },
+    //                     relations: ['media']
+    //                 });
+
+    //                 if (item) {
+    //                     // Delete the related Media entity first
+    //                     if (item.media) {
+    //                         await transactionalEntityManager.delete(Media, item.media.id);
+    //                     }
+    //                     // Then delete the VendorItem entity
+    //                     await transactionalEntityManager.delete(VendorItem, item.id);
+    //                 }
+    //             });
+
+    //         }
+
+    //     } catch (error: any) {
+    //         throw HttpException.badRequest(error?.message);
+    //     }
+    // }
 
     async deleteItem(itemId: string, vendorId: string) {
         try {
             const check = await this.getById(itemId);
-
+            const mediaId = check.image_id;
             const mediaDelete = await mediaService.deleteMedia(
-                check.image_id as string
+                mediaId,
+                check.image_url
             );
 
-            const item = await this.vendorItem
-                .createQueryBuilder('vendor')
-                .delete()
-                .from(VendorItem)
-                .where('id = :id and vendorId = :vendorId', {
-                    id: itemId,
-                    vendorId: vendorId,
-                })
-                .execute();
-            if (!item?.affected)
-                throw HttpException.badRequest('Item Id not found');
+            if (mediaDelete) {
+                const item = await this.vendorItem
+                    .createQueryBuilder('vendor')
+                    .delete()
+                    .from(VendorItem)
+                    .where('id = :id and vendorId = :vendorId', {
+                        id: itemId,
+                        vendorId: vendorId,
+                    })
+                    .execute();
+            }
         } catch (error: any) {
             throw HttpException.badRequest(error?.message);
         }
