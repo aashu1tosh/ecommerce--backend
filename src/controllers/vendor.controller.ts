@@ -2,6 +2,7 @@ import { type Request, type Response } from 'express';
 import { StatusCodes } from '../constant/statusCodes';
 import vendorService from '../services/vendor.service';
 import HttpException from '../utils/HttpException.utils';
+import path from 'path';
 
 class VendorController {
     async getAll(_: Request, res: Response) {
