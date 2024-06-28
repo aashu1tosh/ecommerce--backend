@@ -16,8 +16,10 @@ class AuthService {
 
     async createUser(data: Auth) {
         try {
-            const user = this.AuthRepo.create(data);
+            if (data.role === ROLE.ADMIN)
+                throw HttpException.badRequest('Admin creation not Authorized');
 
+            const user = this.AuthRepo.create(data);
             const uniqueEmail = this.AuthRepo.findOne({
                 where: { email: data?.email },
             });
