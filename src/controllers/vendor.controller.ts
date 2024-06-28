@@ -36,7 +36,7 @@ class VendorController {
         if (!id) {
             throw HttpException.badRequest("Id couldn't be retrieved");
         }
-        await vendorService.createItem1(req.body, id, mediaId);
+        await vendorService.createItemWithMedia(req.body, id, mediaId);
         res.status(StatusCodes.CREATED).json({
             success: true,
             message: 'Item Post Successful',
