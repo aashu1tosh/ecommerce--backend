@@ -10,7 +10,7 @@ class AdminController {
             req.query.perpage as string
         );
         const response = await adminService.getAll(page, perpage);
-        res.status(StatusCodes.ACCEPTED).json({
+        res.status(StatusCodes.SUCCESS).json({
             success: true,
             message: 'Fetch Successful',
             main: {
@@ -22,7 +22,7 @@ class AdminController {
 
     async resetPassword(req: Request, res: Response) {
         await adminService.resetPassword(req.body);
-        res.status(StatusCodes.ACCEPTED).json({
+        res.status(StatusCodes.SUCCESS).json({
             success: true,
             message: 'Password Reset Successful',
             main: {},
@@ -31,7 +31,7 @@ class AdminController {
 
     async deleteUser(req: Request, res: Response) {
         await adminService.deleteUser(req.params.id);
-        res.status(StatusCodes.ACCEPTED).json({
+        res.status(StatusCodes.SUCCESS).json({
             success: true,
             message: 'User Deletion Successful',
             main: {},

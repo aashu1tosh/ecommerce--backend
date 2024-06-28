@@ -18,7 +18,7 @@ class AuthController {
 
     async login(req: Request, res: Response) {
         const response = await authServices.loginUser(req.body);
-        res.status(StatusCodes.ACCEPTED).json({
+        res.status(StatusCodes.SUCCESS).json({
             success: true,
             message: 'Login Successful',
             main: response,
@@ -27,7 +27,7 @@ class AuthController {
 
     async googleLogin(req: Request, res: Response) {
         const user = await authServices.googleLogin(req.body.googleId);
-        res.status(StatusCodes.ACCEPTED).json({
+        res.status(StatusCodes.SUCCESS).json({
             success: true,
             message: 'Operation Successful',
             main: user,
