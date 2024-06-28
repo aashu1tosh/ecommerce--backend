@@ -29,6 +29,24 @@ export class PostItemDTO {
     mediaId: string;
 }
 
+export class PostItemWithMediaDTO {
+    @IsNotEmpty()
+    @Length(3, 30)
+    name: string;
+
+    @IsNotEmpty()
+    price: string;
+
+    @IsNotEmpty()
+    @IsString()
+    description: string;
+
+    @IsNotEmpty()
+    @IsArray()
+    @IsString({ each: true })
+    tags: string[];
+}
+
 export class MediaUploadDTO {
     @IsNotEmpty()
     @IsString()

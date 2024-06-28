@@ -28,6 +28,21 @@ class VendorController {
         });
     }
 
+    async createItemWithMedia(req: Request, res: Response) {
+        const id = res?.locals?.id?.id;
+        const mediaId = res?.locals.mediaId;
+        req.body.price = Number(req.body.price);
+
+        if (!id) {
+            throw HttpException.badRequest("Id couldn't be retrieved");
+        }
+        await vendorService.createItemWithMedia(req.body, id, mediaId);
+        res.status(StatusCodes.CREATED).json({
+            success: true,
+            message: 'Item Post Successful',
+        });
+    }
+
     async deleteItem(req: Request, res: Response) {
         const itemId = req?.params.id;
         const vendorId = res?.locals?.id?.id;
