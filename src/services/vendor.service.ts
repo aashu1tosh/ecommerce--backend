@@ -29,6 +29,18 @@ class vendorService {
         }
     }
 
+    async createItemWithMedia(data: VendorItem, id: string, mediaId: string) {
+        try {
+            data.mediaId = mediaId;
+            const item = this.vendorItem.create(data);
+            item.vendorId = id;
+            const response = await this.vendorItem.save(item);
+            return response;
+        } catch (error: any) {
+            throw HttpException.badRequest(error?.message);
+        }
+    }
+
     async getAll(id: string) {
         try {
             const result = await this.vendorItem
