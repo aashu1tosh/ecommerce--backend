@@ -27,6 +27,9 @@ export class DotenvConfig {
         .concat(process.env.PORT!)
         .concat('/');
 
+    // DEBUG_MODE
+    static DEBUG_MODE = process.env.DEBUG_MODE;
+
     // CORS LIST
     static CORS_ORIGIN = process.env.CORS_ORIGIN?.split(',') || [];
 }
