@@ -5,6 +5,7 @@ import path from 'path';
 import { DotenvConfig } from '../config/env.config';
 import routes from '../routes/index.route';
 import { errorHandler } from './errorHandler.middleware';
+import helmet from 'helmet';
 
 const middleware = (app: Application) => {
     const allowedOrigins = DotenvConfig.CORS_ORIGIN;
@@ -19,6 +20,8 @@ const middleware = (app: Application) => {
             ],
         })
     );
+
+    app.use(helmet());
 
     app.use(
         express.json({

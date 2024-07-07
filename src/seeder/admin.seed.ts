@@ -3,7 +3,6 @@ import { admins } from '../constant/admin';
 import { Auth } from '../entities/auth/auth.entity';
 import { IAdmin } from '../interface/admin.interface';
 import BcryptService from '../services/bcrypt.service';
-import HttpException from '../utils/HttpException.utils';
 import Print from '../utils/print';
 
 async function seedAdmin(data: IAdmin) {
@@ -19,7 +18,7 @@ async function seedAdmin(data: IAdmin) {
             .getOne();
 
         if (existingAdmin) {
-            throw HttpException.conflict('Phone or email must be unique.');
+            Print.error('Phone or email must be unique.');
         }
 
         const user = authRepo.create(data);

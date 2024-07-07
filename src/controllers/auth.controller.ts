@@ -2,7 +2,6 @@ import { type Request, type Response } from 'express';
 import { StatusCodes } from '../constant/statusCodes';
 // import { AuthService } from '../services/auth.service';
 import {
-    default as authService,
     default as authServices,
 } from '../services/auth.service';
 
@@ -36,7 +35,7 @@ class AuthController {
 
     async updatePassword(req: Request, res: Response) {
         const id = res?.locals?.id?.id;
-        await authService.updatePassword(req.body, id);
+        await authServices.updatePassword(req.body, id);
         res.status(StatusCodes.SUCCESS).json({
             success: true,
             message: 'Password updated successfully',

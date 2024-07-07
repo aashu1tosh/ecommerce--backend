@@ -1,4 +1,4 @@
-import { plainToClass } from 'class-transformer';
+import { ClassConstructor, plainToClass } from 'class-transformer';
 import { validate, type ValidationError } from 'class-validator';
 import { type NextFunction, type Request, type Response } from 'express';
 import HttpException from '../utils/HttpException.utils';
@@ -21,7 +21,7 @@ const getValidationMessage = (errors: ValidationError[], message: string[]) => {
 };
 
 export default class RequestValidator {
-    static validate = (classInstance: any) => {
+    static validate = <T extends object>(classInstance: ClassConstructor<T>) => {
         return async (req: Request, res: Response, next: NextFunction) => {
             const convertedObject = plainToClass(classInstance, req.body);
             const validationMessage: string[] = [];
