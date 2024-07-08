@@ -21,7 +21,9 @@ const getValidationMessage = (errors: ValidationError[], message: string[]) => {
 };
 
 export default class RequestValidator {
-    static validate = <T extends object>(classInstance: ClassConstructor<T>) => {
+    static validate = <T extends object>(
+        classInstance: ClassConstructor<T>
+    ) => {
         return async (req: Request, res: Response, next: NextFunction) => {
             const convertedObject = plainToClass(classInstance, req.body);
             const validationMessage: string[] = [];
