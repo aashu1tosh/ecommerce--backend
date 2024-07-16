@@ -8,9 +8,6 @@ export const errorHandler = (
     next: NextFunction
 ) => {
     let statusCode = 500;
-    console.log(DotenvConfig.DEBUG_MODE === 'true');
-
-    console.log(error.message);
 
     let data = {
         success: false,
