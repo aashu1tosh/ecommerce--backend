@@ -3,12 +3,15 @@ import { ROLE } from '../constant/enum';
 import { ResetPasswordDTO } from '../dto/admin.dto';
 import { Auth } from '../entities/auth/auth.entity';
 import HttpException from '../utils/HttpException.utils';
+import generateStrongPassword from '../utils/generatePassword.utils';
 import BcryptService from './bcrypt.service';
+import { EmailService, IMailOptions } from './utils/email.service';
 
 class AdminService {
     constructor(
         private readonly AuthRepo = AppDataSource.getRepository(Auth),
-        private readonly bcrpytService = new BcryptService()
+        private readonly bcrpytService = new BcryptService(),
+        private readonly emailService = new EmailService()
     ) {}
 
     async getAll(page: number, perpage: number) {
@@ -45,15 +48,31 @@ class AdminService {
     }
 
     async resetPassword(data: ResetPasswordDTO) {
-        const hash = await this.bcrpytService.hash(data?.newPassword);
-        const response = await this.AuthRepo.createQueryBuilder()
-            .update(Auth)
-            .set({
-                password: hash,
-            })
-            .where('id = :id', { id: data.id })
-            .execute();
-        return response;
+        try {
+            const user = await this.AuthRepo.findOneBy({ id: data?.id });
+
+            if (!user) throw HttpException.badRequest('Invalid Id is passed');
+
+            const password = generateStrongPassword();
+            const hash = await this.bcrpytService.hash(password);
+            const response = await this.AuthRepo.createQueryBuilder()
+                .update(Auth)
+                .set({
+                    password: hash,
+                })
+                .where('id = :id', { id: data.id })
+                .execute();
+
+            const mailOptions: IMailOptions = {
+                to: user?.email,
+                subject: 'Regarding Password Reset in E-commerce',
+                text: 'Your new password is: ' + password,
+            };
+            this.emailService.sendMail(mailOptions);
+            return response;
+        } catch (error) {
+            throw HttpException.internalServerError('Something went wrong');
+        }
     }
 
     async deleteUser(id: string) {

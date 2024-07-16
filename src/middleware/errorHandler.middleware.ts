@@ -8,15 +8,13 @@ export const errorHandler = (
     next: NextFunction
 ) => {
     let statusCode = 500;
-    console.log(DotenvConfig.DEBUG_MODE === 'true')
-
-    console.log(error.message)
 
     let data = {
         success: false,
         message: 'Error Occurred',
-        ...(DotenvConfig.DEBUG_MODE === 'true' && { originalError: error.message })
-
+        ...(DotenvConfig.DEBUG_MODE === 'true' && {
+            originalError: error.message,
+        }),
     };
     if (error?.isOperational || error?.isCustom) {
         statusCode = error.statusCode;

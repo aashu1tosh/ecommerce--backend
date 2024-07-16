@@ -21,6 +21,12 @@ export class DotenvConfig {
     // SEED ADMIN PASSWORD
     static ADMIN_PASSWORD = process.env.ADMIN_PASSWORD!;
 
+    // MAIL SERVICE
+    static MAIL_HOST = process.env.MAIL_HOST!;
+    static MAIL_PORT = +process.env.MAIL_PORT!;
+    static EMAIL_USER = process.env.EMAIL_USER!;
+    static EMAIL_PASSWORD = process.env.EMAIL_PASSWORD!;
+
     // BACKEND URL
     static BACKEND_URL = process.env
         .BACKEND_URL!.concat(':')

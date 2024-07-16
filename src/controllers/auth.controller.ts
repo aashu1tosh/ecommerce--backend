@@ -1,9 +1,7 @@
 import { type Request, type Response } from 'express';
 import { StatusCodes } from '../constant/statusCodes';
 // import { AuthService } from '../services/auth.service';
-import {
-    default as authServices,
-} from '../services/auth.service';
+import { default as authServices } from '../services/auth.service';
 
 class AuthController {
     async createUser(req: Request, res: Response) {
