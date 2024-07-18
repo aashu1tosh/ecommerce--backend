@@ -2,6 +2,7 @@ import { createServer } from 'http';
 import app from './config/app.config';
 import { AppDataSource } from './config/database.config';
 import { DotenvConfig } from './config/env.config';
+import mediaCron from './services/utils/cronjobs/mediaCron.service';
 import Print from './utils/print';
 
 function listen() {
@@ -15,6 +16,7 @@ AppDataSource.initialize()
     .then(async () => {
         Print.info(`🚀 Database successfully connected`);
         listen(); // Start the server
+        mediaCron.cronStart();
     })
     .catch((err) => {
         Print.info(`❌ Database connection failure - ${err?.message}`);
