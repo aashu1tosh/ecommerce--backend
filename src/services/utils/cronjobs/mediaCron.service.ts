@@ -8,11 +8,13 @@ class MediaCronService {
     constructor(
         private readonly mediaRepo = AppDataSource.getRepository(Media)
         // private readonly mediaService = mediaService
-    ) {}
+    ) { }
     async cronStart() {
         try {
-            const task = cron.schedule('* * */22 * * *', async () => {
-                console.log('running a task every 22 hours');
+            const task = cron.schedule('0 0 */22 * * *', async () => {
+            // const task = cron.schedule('*/1 * * * *', async () => {
+                // console.log('running a task every 22 hours');
+                Print.info("Cron job started at: " + new Date().toLocaleString());
                 const hourAgo = new Date(Date.now() - 60 * 60 * 1000);
 
                 const items = await this.mediaRepo
@@ -27,8 +29,11 @@ class MediaCronService {
                         item?.id as string,
                         item?.filepath
                     );
+                    Print.info(response + " column has been deleted with file path: " + item?.filepath);
                     // Print.info(response.messaged)
                 });
+                Print.info("Cron job Ended");
+
             });
             task.start();
         } catch (error: any) {
