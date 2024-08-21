@@ -19,7 +19,7 @@ export class VendorItem extends Base {
     @Column('text', { array: true, nullable: true })
     tags: string[];
 
-    @ManyToOne(() => Auth)
+    @ManyToOne(() => Auth, { cascade: true, onDelete: 'CASCADE' })
     @JoinColumn({ name: 'vendorId' }) // Specifies the name of the foreign key column
     auth: Auth;
 

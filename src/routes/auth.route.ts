@@ -4,11 +4,12 @@ import {
     CreateUserDTO,
     GoogleLoginDTO,
     LoginUserDTO,
+    RequestEmailVerification,
     UpdatePasswordDTO,
 } from '../dto/auth.dto';
 import RequestValidator from '../middleware/Request.Validator';
-import { catchAsync } from '../utils/catchAsync.utils';
 import { authentication } from '../middleware/authentication.middleware';
+import { catchAsync } from '../utils/catchAsync.utils';
 
 const router = express.Router();
 
@@ -19,6 +20,17 @@ router.post(
     RequestValidator.validate(CreateUserDTO),
     catchAsync(authController.createUser)
 );
+
+//Endpoint for verify email request
+router.post(
+    '/request-verification',
+    RequestValidator.validate(RequestEmailVerification),
+    catchAsync(authController.requestVerification)
+);
+
+//Endpoint for verification email
+router.get('/verify/:token', catchAsync(authController.verifyEmail));
+
 // Endpoint for login of user
 router.post(
     '/login',

@@ -13,6 +13,18 @@ class AuthController {
         });
     }
 
+    async requestVerification(req: Request, res: Response) {
+        const email = req?.body?.email;
+        await authServices.requestVerification(email);
+        res.status(StatusCodes.CREATED).json({
+            success: true,
+            message: 'Created Successfully',
+            main: null,
+        });
+    }
+
+    async verifyEmail(req: Request, res: Response) {}
+
     async login(req: Request, res: Response) {
         const response = await authServices.loginUser(req.body);
         res.status(StatusCodes.SUCCESS).json({
@@ -28,6 +40,14 @@ class AuthController {
             success: true,
             message: 'Operation Successful',
             main: user,
+        });
+    }
+
+    async facebookLogin(req: Request, res: Response) {
+        console.log(req);
+        res.status(StatusCodes.SUCCESS).json({
+            success: true,
+            message: 'Operation Successful',
         });
     }
 
