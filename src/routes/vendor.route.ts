@@ -10,6 +10,7 @@ import { catchAsync } from '../utils/catchAsync.utils';
 import uploadFile from '../utils/fileUploads';
 
 const router = express.Router();
+
 router.use(authentication());
 router.use(authorization([ROLE.VENDOR]));
 const vendorController = new VendorController();

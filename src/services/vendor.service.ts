@@ -124,13 +124,13 @@ class vendorService {
         try {
             const check = await this.getById(itemId);
             const mediaId = check.image_id;
-            const mediaDelete = await mediaService.deleteMedia(
+            const mediaDelete = await mediaService.deleteMediaService(
                 mediaId,
                 check.image_url
             );
 
             if (mediaDelete) {
-                const item = await this.vendorItem
+                await this.vendorItem
                     .createQueryBuilder('vendor')
                     .delete()
                     .from(VendorItem)

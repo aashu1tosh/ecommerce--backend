@@ -1,6 +1,7 @@
 node_modules
 .env
 public/uploads
+public/*
 pnpm-lock.yaml 
 yark.lock
 npm.lock

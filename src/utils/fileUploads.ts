@@ -1,5 +1,5 @@
 import fs from 'fs';
-import multer, { FileFilterCallback } from 'multer';
+import multer from 'multer';
 
 const uploadsDirectory = 'public/uploads';
 

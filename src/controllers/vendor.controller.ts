@@ -2,7 +2,6 @@ import { type Request, type Response } from 'express';
 import { StatusCodes } from '../constant/statusCodes';
 import vendorService from '../services/vendor.service';
 import HttpException from '../utils/HttpException.utils';
-import path from 'path';
 
 class VendorController {
     async getAll(_: Request, res: Response) {
@@ -47,7 +46,7 @@ class VendorController {
         const itemId = req?.params.id;
         const vendorId = res?.locals?.id?.id;
         if (!itemId && !vendorId) {
-            throw HttpException.badRequest('Error while of vendor or item.');
+            throw HttpException.badRequest('Error item id not found');
         }
 
         await vendorService.deleteItem(itemId, vendorId);

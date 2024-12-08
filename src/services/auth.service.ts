@@ -45,6 +45,10 @@ class AuthService {
         }
     }
 
+    async requestVerification(email: string) {}
+
+    async verifyEmail() {}
+
     async loginUser(data: Auth) {
         try {
             let user = await this.AuthRepo.findOne({

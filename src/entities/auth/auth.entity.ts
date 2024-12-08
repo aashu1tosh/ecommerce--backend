@@ -23,4 +23,7 @@ export class Auth extends Base {
 
     @Column()
     role: ROLE;
+
+    @Column({ name: 'otp_verified', default: false })
+    otpVerified: boolean;
 }

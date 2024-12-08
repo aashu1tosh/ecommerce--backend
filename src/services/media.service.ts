@@ -20,7 +20,7 @@ class mediaService {
         }
     }
 
-    async deleteMedia(id: string, filepath: string) {
+    async deleteMediaService(id: string, filepath: string) {
         try {
             const imageDelete = await deleteMedia(filepath);
             if (imageDelete) {

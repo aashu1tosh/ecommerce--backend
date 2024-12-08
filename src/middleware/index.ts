@@ -4,8 +4,10 @@ import rateLimit from 'express-rate-limit';
 import helmet from 'helmet';
 import morgan from 'morgan';
 import path from 'path';
+import swaggerUI from 'swagger-ui-express';
 import { DotenvConfig } from '../config/env.config';
 import routes from '../routes/index.route';
+import swaggerSpec from '../swagger';
 import { errorHandler } from './errorHandler.middleware';
 
 const middleware = (app: Application) => {
@@ -45,7 +47,15 @@ const middleware = (app: Application) => {
     app.use(morgan('common'));
     app.use('/api/v1', routes);
 
-    app.use(errorHandler);
+    app.set('view engine', 'ejs');
+    app.set('views', path.join(__dirname, '../', 'views'));
+    app.get('/', (req, res) => {
+        res.render('index');
+    });
+    app.use('/api-docs', swaggerUI.serve, swaggerUI.setup(swaggerSpec))
+
+
+    app.use(errorHandler)
 };
 
 export default middleware;
